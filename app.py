@@ -2,102 +2,110 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
 from PIL import Image
-import base64
-import json
 
-# === Page configuration ===
-st.set_page_config(page_title="Sheelam Portfolio", layout="wide", page_icon="💼")
+# Page Configuration
+st.set_page_config(page_title="Harshavardhan | Portfolio", page_icon="💼", layout="wide")
 
-# === CSS styling ===
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-body, .stApp {background: linear-gradient(to right,#0c0c0f,#003d5b); color: white; font-family: 'Inter';}
-.card {background: rgba(255,255,255,0.1); padding:2rem; border-radius:12px; margin-bottom:2rem; backdrop-filter: blur(10px);}
-.profile {border-radius:50%; width:150px; border:3px solid white;}
-</style>
-""", unsafe_allow_html=True)
+# Load profile image
+profile_img = Image.open("profile.jpg")
 
-# === Load Lottie animation safely ===
-def load_lottie(url):
+# Load Lottie Animation
+def load_lottieurl(url):
     r = requests.get(url)
-    return r.json() if r.status_code == 200 else None
+    if r.status_code != 200:
+        return None
+    return r.json()
 
-hero_anim = load_lottie("https://lottie.host/.../hero.json")
-skills_anim = load_lottie("https://lottie.host/.../skills.json")
+# Lottie animation URLs
+lottie_coding = load_lottieurl("https://lottie.host/086a7eb7-5815-46e2-9468-824f18e02dce/h2afOtwocy.json")
+lottie_contact = load_lottieurl("https://lottie.host/aa581e0e-cc93-4a8e-83b6-39d7fca314c9/vWqEXuDEDn.json")
 
-# === Header ===
-col1, col2 = st.columns([1,4])
-with col1:
-    try:
-        img = Image.open("profile.jpg")
-        st.image(img, width=150, use_column_width=False)
-    except:
-        st.warning("Place profile.jpg in current folder.")
-with col2:
-    st.title("Sheelam Harshavardhan")
-    st.write("Aspiring ML & Deep Learning Engineer") 
-    st.write("📍 Hyderabad | ✉️ harshavardhansheelam@gmail.com")
-
-if hero_anim:
-    st_lottie(hero_anim, height=200)
-
-# === Tabs: About / Skills / Projects / Timeline / Chatbot? / Resume / Contact ===
-tabs = st.tabs(["About", "Skills", "Projects", "Timeline", "Resume", "Contact"])
-bio = open("bio.txt", encoding="utf-8").read() if st.sidebar.button("🔄 Load bio") else ""
-
-with tabs[0]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.header("About Me")
-    st.write(bio or "Add your intro in `bio.txt` and click ➡️")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with tabs[1]:
-    if skills_anim:
-        st_lottie(skills_anim, height=150)
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("Skills")
-    st.write("- Python, C++, Java\n- TensorFlow, Keras, Scikit‑learn, Pandas\n- Git, VS Code, Jupyter\n- Soft Skills: Problem solving, teamwork")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with tabs[2]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.header("Projects")
-    st.markdown("**Movie Recommendation System**  
-Python • Scikit‑learn • cosine similarity  
-[GitHub](https://github.com/harshavardhan2415/movie-recommender)")
-    st.markdown("**Book Recommendation System**  
-Python • TensorFlow • Keras  
-[GitHub](https://github.com/harshavardhan2415/book-recommender)")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with tabs[3]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.header("Career Snapshot")
-    # Use external JSON timeline file
-    timeline_json = json.load(open("timeline.json"))
-    st.write(timeline_json)  # replace with streamlit_timeline.timeline import if available
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with tabs[4]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.header("Resume")
-    with open("resume.pdf","rb") as f:
-        b64 = base64.b64encode(f.read()).decode()
-        iframe = f'<iframe src="data:application/pdf;base64,{b64}" width="100%" height="600px"></iframe>'
-        st.markdown(iframe, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with tabs[5]:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.header("Contact Me")
-    st.markdown(f"""
-<form action="https://formsubmit.co/harshavardhansheelam@gmail.com" method="POST">
-<input type="hidden" name="_captcha" value="false">
-<input type="text" name="name" placeholder="Your name" required><br>
-<input type="email" name="email" placeholder="Your email" required><br>
-<textarea name="message" placeholder="Your message" required></textarea><br>
-<button type="submit">Send</button>
-</form>
+# --- CSS ---
+st.markdown("""
+    <style>
+        .main {
+            background: linear-gradient(to right, #f1f4f9, #dff1ff);
+        }
+        h1, h2, h3 {
+            color: #113452;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .stButton>button {
+            background-color: #1f77be;
+            color: white;
+            border-radius: 8px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0f0ff;
+            color: #134e6f;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 2px 5px;
+        }
+    </style>
 """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+
+# --- HEADER ---
+with st.container():
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        st.image(profile_img, width=180)
+    with col2:
+        st.title("Sheelam Harshavardhan")
+        st.subheader("Aspiring Machine Learning Engineer")
+        st.write("📍 Hyderabad, India")
+        st.write("📧 harshavardhansheelam@gmail.com")
+        st.markdown("[🌐 GitHub](https://github.com/harshavardhan2415) | [🔗 LinkedIn](https://www.linkedin.com/in/sheelam-harshavardhan-4747092b7)")
+
+# --- ANIMATION ---
+with st.container():
+    if lottie_coding:
+        st_lottie(lottie_coding, height=200, key="coding")
+
+# --- PROJECTS ---
+with st.container():
+    st.write("---")
+    st.header("📁 Projects")
+    st.markdown("##")
+
+    st.markdown("""
+    ### 🎬 Movie Recommendation System  
+    Python • Scikit‑learn • Cosine Similarity  
+    [GitHub Repo](https://github.com/harshavardhan2415/movie-recommender)
+    """)
+
+    st.markdown("""
+    ### 📚 Book Recommendation System  
+    Python • TensorFlow • Keras  
+    [GitHub Repo](https://github.com/harshavardhan2415/book-recommender)
+    """)
+
+# --- SKILLS ---
+with st.container():
+    st.write("---")
+    st.header("🛠️ Skills")
+    st.markdown("##")
+    st.markdown("#### Programming Languages")
+    st.markdown('<span class="tag">Python</span><span class="tag">C++</span><span class="tag">Java</span>', unsafe_allow_html=True)
+    st.markdown("#### Tools")
+    st.markdown('<span class="tag">Git</span><span class="tag">VS Code</span><span class="tag">Jupyter</span>', unsafe_allow_html=True)
+    st.markdown("#### Soft Skills")
+    st.markdown('<span class="tag">Problem Solving</span><span class="tag">Fast Learner</span><span class="tag">Teamwork</span>', unsafe_allow_html=True)
+
+# --- CONTACT ---
+with st.container():
+    st.write("---")
+    st.header("📞 Contact")
+    st.markdown("##")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("Email: harshavardhansheelam@gmail.com")
+        st.write("Phone: +91 94916 35633")
+    with col2:
+        if lottie_contact:
+            st_lottie(lottie_contact, height=160, key="contact")
+
+# --- FOOTER ---
+st.write("---")
+st.markdown("<center>© 2025 Sheelam Harshavardhan</center>", unsafe_allow_html=True)
