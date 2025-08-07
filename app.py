@@ -1,106 +1,87 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Aug  7 09:10:26 2025
-
-@author: harsh
-"""
-
 import streamlit as st
 from PIL import Image
 
-# ---------- CONFIG ----------
-st.set_page_config(page_title="My Portfolio", page_icon="📁", layout="wide")
+# ---------- CONFIGURATION ----------
+st.set_page_config(page_title="Sheelam Harshavardhan | Portfolio", page_icon="📄", layout="wide")
+
+# ---------- PROFILE PHOTO ----------
+profile_pic = "profile.jpg"  # Replace with a hosted URL or local file in your repo
 
 # ---------- HEADER ----------
 with st.container():
-    st.subheader("Hi, I'm Your Name 👋")
-    st.title("A [Your Role] with a passion for building impactful projects.")
-    st.write("Welcome to my portfolio. I love solving real-world problems with data, code, and creativity.")
-    st.write("[Download Resume >](#)")  # <-- Add a real link
+    st.markdown("<h1 style='text-align: center;'>📄 Sheelam Harshavardhan</h1>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; color: grey;'>Aspiring Machine Learning & Deep Learning Engineer</h4>", unsafe_allow_html=True)
 
-# ---------- ABOUT ----------
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(profile_pic, width=180)
+
+    st.markdown("---")
+    st.markdown("""
+    <div style='text-align: center; font-size: 18px;'>
+        📍 Hyderabad, India &nbsp; | &nbsp; 📞 +91 94916 35633 &nbsp; | &nbsp; ✉️ harshavardhansheelam@gmail.com  
+        <br><br>
+        🔗 
+        <a href='https://github.com/harshavardhan2415' target='_blank'>GitHub</a> | 
+        <a href='https://www.linkedin.com/in/sheelam-harshavardhan-4747092b7' target='_blank'>LinkedIn</a> | 
+        <a href='https://leetcode.com/harshavardhan2415' target='_blank'>LeetCode</a>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ---------- EDUCATION ----------
 with st.container():
     st.write("---")
-    st.header("About Me")
-    st.write(
-        """
-        I'm a [Your Profession] with experience in:
-        - Python, Machine Learning, Data Analysis
-        - Streamlit, Flask, SQL
-        - Git, Docker, AWS
+    st.header("🎓 Education")
+    st.markdown("""
+    **National Institute of Technology, Andhra Pradesh**  
+    B.Tech in Electronics and Communication Engineering (Expected 2026)  
+    CGPA: **8.6**
+    """)
 
-        I enjoy working on end-to-end projects, from problem understanding to deployment.
-        """
-    )
+# ---------- SKILLS ----------
+with st.container():
+    st.write("---")
+    st.header("🛠️ Skills")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Programming")
+        st.markdown("- C++\n- Python\n- Java")
+
+        st.subheader("Tools")
+        st.markdown("- Git\n- VS Code\n- Jupyter Notebook")
+
+    with col2:
+        st.subheader("Concepts")
+        st.markdown("- Data Structures & Algorithms\n- OOP\n- DBMS\n- Software Engineering")
+
+        st.subheader("Soft Skills")
+        st.markdown("- Problem Solving\n- Critical Thinking\n- Fast Learner\n- Collaborative")
 
 # ---------- PROJECTS ----------
 with st.container():
     st.write("---")
-    st.header("My Projects")
-    st.write("##")
+    st.header("📂 Projects")
 
-    col1, col2, col3 = st.columns(3)
+    st.markdown("""
+    ### 📽️ Movie Recommendation System  
+    *Tech: Python, Pandas, Scikit-Learn*  
+    Developed a content-based and collaborative filtering model using cosine similarity to suggest movies.
 
-    with col1:
-        st.subheader("Project One")
-        st.image("https://via.placeholder.com/300x200", use_column_width=True)
-        st.write("Short description of project one.")
-        st.write("[GitHub Repo](#)")
+    ---
 
-    with col2:
-        st.subheader("Project Two")
-        st.image("https://via.placeholder.com/300x200", use_column_width=True)
-        st.write("Short description of project two.")
-        st.write("[GitHub Repo](#)")
+    ### 📚 Book Recommendation System  
+    *Tech: Python, Keras, TensorFlow*  
+    Implemented an ANN to provide personalized book suggestions based on user preferences.
+    """)
 
-    with col3:
-        st.subheader("Project Three")
-        st.image("https://via.placeholder.com/300x200", use_column_width=True)
-        st.write("Short description of project three.")
-        st.write("[GitHub Repo](#)")
-
-# ---------- CONTACT ----------
+# ---------- CERTIFICATIONS ----------
 with st.container():
     st.write("---")
-    st.header("Contact Me")
-    st.write("##")
+    st.header("🎖️ Certifications")
+    st.markdown("- ✅ Database Management Systems (DBMS) – NPTEL")
 
-    contact_form = """
-    <form action="https://formsubmit.co/your@email.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <textarea name="message" placeholder="Your message here..." required></textarea>
-        <button type="submit">Send</button>
-    </form>
-    """
-
-    st.markdown(contact_form, unsafe_allow_html=True)
-
-    # Optional styling
-    st.markdown(
-        """
-        <style>
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 300px;
-        }
-        input, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: sans-serif;
-        }
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+# ---------- FOOTER ----------
+with st.container():
+    st.write("---")
+    st.markdown("<div style='text-align: center; color: grey;'>© 2025 Sheelam Harshavardhan</div>", unsafe_allow_html=True)
