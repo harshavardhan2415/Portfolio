@@ -1,108 +1,129 @@
 import streamlit as st
+from PIL import Image
 from streamlit_lottie import st_lottie
 import requests
 
-# --- PAGE CONFIG ---
-st.set_page_config(page_title="Sheelam Harshavardhan | Portfolio", page_icon="🤖", layout="wide")
+# ------------ PAGE CONFIG ------------
+st.set_page_config(page_title="Harshavardhan Portfolio", page_icon="💼", layout="wide")
 
-
-# --- LOTTIE LOADER ---
+# ------------ LOTTIE LOADER ------------
 def load_lottie(url):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
 
+# ------------ LOTTIE FILES ------------
+hero_anim = load_lottie("https://lottie.host/38eec7b0-9f83-4a3e-ae7c-e34f6121c4e2/9DbO2He9DR.json")
+skills_anim = load_lottie("https://lottie.host/70627c12-d4db-4093-9ed7-446d70a3f3d0/eyrPXYYFiH.json")
+projects_anim = load_lottie("https://lottie.host/bfe9bc7b-e3f3-469f-8ed5-41c876aa64dc/7vwv4A5D6k.json")
 
-# --- LOTTIE FILES ---
-anim_hero = load_lottie("https://lottie.host/f9cc089d-e720-4db9-8fbd-65eb7292c38f/7KR7xvDf7x.json")
-anim_skills = load_lottie("https://lottie.host/4ac11ac8-40fd-4b5f-a748-10f35de5c5f7/DQ1Of2oPCZ.json")
-anim_projects = load_lottie("https://lottie.host/bfe9bc7b-e3f3-469f-8ed5-41c876aa64dc/7vwv4A5D6k.json")
-
-
-# --- STYLES ---
+# ------------ CSS STYLE ------------
 st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap');
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Space Grotesk', sans-serif;
-    background-color: #121212;
-    color: #ffffff;
-}
+    html, body, .stApp {
+        font-family: 'Urbanist', sans-serif;
+        background: url('https://images.unsplash.com/photo-1542281286-9e0a16bb7366') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+    }
 
-.container {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    backdrop-filter: blur(14px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
+    .glass {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 2rem;
+    }
 
-a {
-    color: #56C7FF;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-</style>
+    h1, h2, h3, h4 {
+        color: #ffffff;
+    }
+
+    a {
+        color: #56c7ff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .profile-pic {
+        border-radius: 50%;
+        width: 180px;
+        margin-top: -30px;
+        border: 4px solid white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    </style>
 """, unsafe_allow_html=True)
 
+# ------------ HEADER ------------
+st.markdown("<br>", unsafe_allow_html=True)
+cols = st.columns([1, 3])
+with cols[0]:
+    try:
+        image = Image.open("profile.jpg")
+        st.image(image, use_column_width=False, width=180, output_format='auto')
+    except:
+        st.warning("profile.jpg not found. Please place it in the same directory.")
+with cols[1]:
+    st.title("Sheelam Harshavardhan")
+    st.markdown("**Machine Learning & Deep Learning Enthusiast**")
+    st.markdown("📍 Hyderabad | ✉️ harshavardhansheelam@gmail.com | ☎️ +91 94916 35633")
+    st.markdown("[GitHub](https://github.com/harshavardhan2415) | [LinkedIn](https://www.linkedin.com/in/sheelam-harshavardhan-4747092b7) | [LeetCode](https://leetcode.com/harshavardhan2415)")
 
-# --- HERO SECTION ---
-if anim_hero:
-    st_lottie(anim_hero, height=220, key="hero")
-st.title("Sheelam Harshavardhan")
-st.subheader("🚀 Machine Learning & Deep Learning Enthusiast")
-st.write("📍 Hyderabad, India | ✉️ harshavardhansheelam@gmail.com | ☎️ +91 94916 35633")
-st.markdown("[GitHub](https://github.com/harshavardhan2415) | [LinkedIn](https://www.linkedin.com/in/sheelam-harshavardhan-4747092b7) | [LeetCode](https://leetcode.com/harshavardhan2415)")
+# ------------ HERO ANIMATION ------------
+if hero_anim:
+    st_lottie(hero_anim, height=220, key="hero_anim")
 
-# --- TABS ---
+# ------------ TABS ------------
 tab1, tab2, tab3, tab4 = st.tabs(["🧠 About", "🛠️ Skills", "📁 Projects", "📜 Certifications"])
 
-
-# --- ABOUT ---
+# ------------ ABOUT ------------
 with tab1:
-    st.markdown("<div class='container'>", unsafe_allow_html=True)
-    st.header("👨‍💻 About Me")
+    st.markdown("<div class='glass'>", unsafe_allow_html=True)
+    st.header("🧠 About Me")
     st.write("""
-        I’m a B.Tech student at NIT Andhra Pradesh, specializing in Electronics & Communication Engineering.
-        I love working with ML/DL technologies and turning data into intelligent applications.
-        
-        I build practical systems with neural networks, recommender engines, and computer vision models.
+        I’m currently pursuing a B.Tech in Electronics & Communication Engineering at NIT Andhra Pradesh. 
+        Passionate about artificial intelligence and solving real-world problems using ML & DL.
+
+        I enjoy building recommendation systems, neural networks, and working on innovative data projects.
     """)
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# --- SKILLS ---
+# ------------ SKILLS ------------
 with tab2:
-    if anim_skills:
-        st_lottie(anim_skills, height=200, key="skills")
-    st.markdown("<div class='container'>", unsafe_allow_html=True)
+    if skills_anim:
+        st_lottie(skills_anim, height=200, key="skills_anim")
+    st.markdown("<div class='glass'>", unsafe_allow_html=True)
     st.header("🛠️ Skills")
 
     st.subheader("Languages")
     st.write("Python, C++, Java")
 
     st.subheader("Libraries & Frameworks")
-    st.write("NumPy, Pandas, TensorFlow, Keras, Scikit-learn")
+    st.write("TensorFlow, Keras, Scikit-learn, NumPy, Pandas")
 
     st.subheader("Tools")
     st.write("Git, Jupyter Notebook, VS Code")
 
     st.subheader("Soft Skills")
-    st.write("Teamwork, Critical Thinking, Fast Learning")
+    st.write("Critical Thinking, Teamwork, Fast Learning")
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# --- PROJECTS ---
+# ------------ PROJECTS ------------
 with tab3:
-    if anim_projects:
-        st_lottie(anim_projects, height=200, key="projects")
-    st.markdown("<div class='container'>", unsafe_allow_html=True)
+    if projects_anim:
+        st_lottie(projects_anim, height=200, key="proj_anim")
+    st.markdown("<div class='glass'>", unsafe_allow_html=True)
     st.header("📁 Projects")
 
     col1, col2 = st.columns(2)
@@ -110,27 +131,25 @@ with tab3:
     with col1:
         st.subheader("🎬 Movie Recommendation System")
         st.caption("Python | Pandas | Scikit-learn")
-        st.write("A hybrid model using content-based and collaborative filtering to suggest movies.")
+        st.write("Content-based + collaborative filtering engine using cosine similarity.")
         st.markdown("[🔗 GitHub](https://github.com/harshavardhan2415/movie-recommender)")
 
     with col2:
         st.subheader("📚 Book Recommendation System")
         st.caption("Python | Keras | TensorFlow")
-        st.write("An ANN-powered book recommender with personalized scoring.")
+        st.write("Artificial Neural Network powered personalized recommender.")
         st.markdown("[🔗 GitHub](https://github.com/harshavardhan2415/book-recommender)")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# --- CERTIFICATIONS ---
+# ------------ CERTIFICATIONS ------------
 with tab4:
-    st.markdown("<div class='container'>", unsafe_allow_html=True)
+    st.markdown("<div class='glass'>", unsafe_allow_html=True)
     st.header("📜 Certifications")
-    st.markdown("- ✅ Database Management Systems — NPTEL")
-    st.markdown("- ✅ AI for Everyone — Coursera")
+    st.markdown("- ✅ **Database Management Systems** — NPTEL")
+    st.markdown("- ✅ **AI for Everyone** — Coursera")
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# --- FOOTER ---
-st.markdown("---")
+# ------------ FOOTER ------------
+st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<center style='color:gray;'>© 2025 Sheelam Harshavardhan</center>", unsafe_allow_html=True)
