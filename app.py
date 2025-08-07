@@ -3,43 +3,45 @@ from PIL import Image
 from streamlit_lottie import st_lottie
 import requests
 
-# --------------- CONFIG ---------------
+# -------- CONFIGURATION --------
 st.set_page_config(
-    page_title="Sheelam Harshavardhan",
+    page_title="Sheelam Harshavardhan Portfolio",
     page_icon="💼",
     layout="wide"
 )
 
-# ------------- FLEXIBLE THEME (CSS) -------------
+# -------- CSS Styling --------
 st.markdown("""
     <style>
+    /* Overall gradient background */
     .stApp {
         background: linear-gradient(135deg,#e4e9fd 0%, #cfd9df 99%);
         min-height: 100vh;
-        font-family: 'Segoe UI', sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .portfolio-header {
-        margin-top: 25px;
-        margin-bottom: 10px;
-        color: #113452;
-    }
+
+    /* Section cards with shadow and hover effect */
     .section-card {
         border-radius: 14px;
         margin-bottom: 28px;
         box-shadow: 0 4px 32px rgba(35,111,161,.11);
         background: rgba(255,255,255,0.86);
         padding: 37px 40px 35px 40px;
-        transition: box-shadow 0.22s;
+        transition: box-shadow 0.22s, transform 0.22s;
     }
     .section-card:hover {
         box-shadow: 0 6px 32px rgba(21,75,214,.16);
         transform: translateY(-4px) scale(1.01);
     }
+
+    /* Images in cards with subtle shadow */
     .card-image {
         border-radius: 10px;
         margin-bottom: 10px;
         box-shadow: 0 2px 10px rgba(34,60,80,.07);
     }
+
+    /* Project tag style */
     .project-tag {
         display: inline-block;
         background: #e0eaef;
@@ -50,6 +52,8 @@ st.markdown("""
         margin-right: 8px;
         margin-bottom: 4px;
     }
+
+    /* Timeline style */
     .timeline {
         border-left: 3.5px solid #235ed5;
         margin: 18px 0 18px 16px;
@@ -59,40 +63,61 @@ st.markdown("""
         margin-bottom: 19px;
         color: #152447;
     }
+
+    /* Section header */
+    .portfolio-header {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        color: #113452;
+    }
+
     hr {
         border: none;
         height: 1.5px;
         background: linear-gradient(60deg,#296ed3,rgba(255,255,255,0));
         margin: 30px 0 17px 0;
     }
+
+    /* Sidebar background */
+    .sidebar .sidebar-content {
+        background: #2940d3;
+        color: white;
+    }
+
     </style>
 """, unsafe_allow_html=True)
 
-# ------------- LOTTIE ANIMATION -------------
+# -------- Utility fn to load Lottie animations --------
 def load_lottieurl(url: str):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
+
+# -------- Lottie animation JSON URLs --------
 lottie_dev = load_lottieurl("https://lottie.host/36bebdfd-719f-4e63-be29-c6044dcee81e/cMLp4GJSw2.json")
 lottie_edu = load_lottieurl("https://lottie.host/8f6e9784-77bf-4cca-bbdd-c426dc764f19/gKXyAyNncc.json")
 lottie_skill = load_lottieurl("https://lottie.host/086a7eb7-5815-46e2-9468-824f18e02dce/h2afOtwocy.json")
 lottie_proj = load_lottieurl("https://lottie.host/3ef7981d-a730-47ba-82ad-71bc9c2e2b9c/iX8jGWDbCA.json")
 lottie_cert = load_lottieurl("https://lottie.host/aa581e0e-cc93-4a8e-83b6-39d7fca314c9/vWqEXuDEDn.json")
 
-# ------------- SIDEBAR NAVIGATION -------------
+# -------- Sidebar Navigation --------
 st.sidebar.image("profile.jpg", width=90, caption="Sheelam Harshavardhan")
 main_section = st.sidebar.radio(
     "Navigate",
     ["About", "Career & Education", "Skills", "Projects", "Certifications"]
 )
 
-# ------------- HEADER SECTION -------------
+# -------- ABOUT SECTION --------
 if main_section == "About":
     col1, col2 = st.columns([1, 3])
     with col1:
-        st_lottie(lottie_dev, width=120, key="about_anim")
-        st.image("profile.jpg", width=120)
+        if lottie_dev:
+            st_lottie(lottie_dev, width=120, key="about_anim")
+        try:
+            st.image("profile.jpg", width=120)
+        except:
+            st.header("Profile Image Not Found")
     with col2:
         st.markdown("<h1 class='portfolio-header'>Sheelam Harshavardhan</h1>", unsafe_allow_html=True)
         st.write("**Aspiring Machine Learning & Deep Learning Engineer**")
@@ -101,9 +126,10 @@ if main_section == "About":
     st.markdown('<hr>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:1.08em;color:#2d2d2d;padding-left:10px;">Driven by curiosity and commitment to impactful tech! Building projects that shape smarter solutions for tomorrow.</div>', unsafe_allow_html=True)
 
-# ------------- TIMELINE: CAREER & EDUCATION -------------
+# -------- CAREER & EDUCATION TIMELINE --------
 if main_section == "Career & Education":
-    st_lottie(lottie_edu, width=80, key="edu_anim")
+    if lottie_edu:
+        st_lottie(lottie_edu, width=80, key="edu_anim")
     with st.container():
         st.markdown('<div class="section-card timeline">', unsafe_allow_html=True)
         st.markdown("### 🎓 Education / Career Timeline")
@@ -115,9 +141,10 @@ if main_section == "Career & Education":
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-# ------------- EXPANDABLE SKILLS SECTION -------------
+# -------- SKILLS with Expanders --------
 if main_section == "Skills":
-    st_lottie(lottie_skill, width=80, key="skill_anim")
+    if lottie_skill:
+        st_lottie(lottie_skill, width=80, key="skill_anim")
     with st.container():
         st.markdown('<div class="section-card">', unsafe_allow_html=True)
         st.markdown("### 🛠️ Key Skills (Click to Expand)")
@@ -131,45 +158,50 @@ if main_section == "Skills":
             st.markdown("Problem Solving, Critical Thinking, Fast Learner, Collaborative")
         st.markdown('</div>', unsafe_allow_html=True)
 
-# ------------- ADVANCED PROJECT CARDS -------------
+# -------- PROJECTS with Cards --------
 if main_section == "Projects":
-    st_lottie(lottie_proj, width=80, key="proj_anim")
+    if lottie_proj:
+        st_lottie(lottie_proj, width=80, key="proj_anim")
     project_data = [
         {
             "title": "Movie Recommendation System",
-            "image": "project_movie.jpg",      # supply your own image
+            "image": "project_movie.jpg",      # replace with your local image
             "tags": ["Python", "Pandas", "Scikit-Learn"],
             "desc": "Built a content-based and collaborative filtering model using cosine similarity to suggest movies.",
-            "github": "https://github.com/yourname/movie-recommender"
+            "github": "https://github.com/harshavardhan2415/movie-recommender"
         },
         {
             "title": "Book Recommendation System",
-            "image": "project_book.jpg",      # supply your own image
+            "image": "project_book.jpg",      # replace with your local image
             "tags": ["Python", "Keras", "TensorFlow"],
             "desc": "Artificial Neural Network for personalized book suggestions.",
-            "github": "https://github.com/yourname/book-recommender"
+            "github": "https://github.com/harshavardhan2415/book-recommender"
         }
     ]
     for proj in project_data:
         with st.container():
             col1, col2 = st.columns([1,3])
             with col1:
-                st.image(proj["image"], width=90, caption="")
+                try:
+                    st.image(proj["image"], width=90, caption="")
+                except:
+                    st.write("[Image missing]")
             with col2:
                 st.markdown(f"<b>{proj['title']}</b>", unsafe_allow_html=True)
                 st.markdown("".join([f"<span class='project-tag'>{tag}</span>" for tag in proj["tags"]]), unsafe_allow_html=True)
                 st.caption(proj["desc"])
                 st.markdown(f"[See on GitHub]({proj['github']})", unsafe_allow_html=True)
 
-# ------------- CERTIFICATIONS WITH ANIMATION -------------
+# -------- CERTIFICATIONS --------
 if main_section == "Certifications":
-    st_lottie(lottie_cert, width=80, key="cert_anim")
+    if lottie_cert:
+        st_lottie(lottie_cert, width=80, key="cert_anim")
     with st.container():
         st.markdown('<div class="section-card">', unsafe_allow_html=True)
         st.markdown("### 🎖️ Certifications")
         st.markdown("- Database Management Systems (DBMS) — NPTEL")
         st.markdown('</div>', unsafe_allow_html=True)
 
-# ------------- FOOTER -------------
+# -------- FOOTER --------
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:grey;'>© 2025 Sheelam Harshavardhan</p>", unsafe_allow_html=True)
