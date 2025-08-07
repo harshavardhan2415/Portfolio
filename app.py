@@ -10,84 +10,104 @@ st.set_page_config(
     layout="wide"
 )
 
-# -------- CSS Styling --------
+# -------- CUSTOM FONTS & STYLES --------
 st.markdown("""
-    <style>
-    /* Overall gradient background */
-    .stApp {
-        background: linear-gradient(135deg,#e4e9fd 0%, #cfd9df 99%);
-        min-height: 100vh;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Font families */
+html, body, .stApp {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 17px;
+}
 
-    /* Section cards with shadow and hover effect */
-    .section-card {
-        border-radius: 14px;
-        margin-bottom: 28px;
-        box-shadow: 0 4px 32px rgba(35,111,161,.11);
-        background: rgba(255,255,255,0.86);
-        padding: 37px 40px 35px 40px;
-        transition: box-shadow 0.22s, transform 0.22s;
-    }
-    .section-card:hover {
-        box-shadow: 0 6px 32px rgba(21,75,214,.16);
-        transform: translateY(-4px) scale(1.01);
-    }
+/* Headers */
+h1, h2, h3, .portfolio-header {
+    font-family: 'Montserrat', 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+}
 
-    /* Images in cards with subtle shadow */
-    .card-image {
-        border-radius: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 10px rgba(34,60,80,.07);
-    }
+/* Markdown & text */
+.stMarkdown, .stText, .glass-card, .section-card {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 17px !important;
+}
 
-    /* Project tag style */
-    .project-tag {
-        display: inline-block;
-        background: #e0eaef;
-        color: #134e6f;
-        border-radius: 6px;
-        font-size: 0.9em;
-        padding: 3px 11px;
-        margin-right: 8px;
-        margin-bottom: 4px;
-    }
+/* Background gradient */
+.stApp {
+    background: linear-gradient(135deg,#e4e9fd 0%, #cfd9df 99%);
+    min-height: 100vh;
+}
 
-    /* Timeline style */
-    .timeline {
-        border-left: 3.5px solid #235ed5;
-        margin: 18px 0 18px 16px;
-        padding-left: 24px;
-    }
-    .timeline-event {
-        margin-bottom: 19px;
-        color: #152447;
-    }
+/* Section cards */
+.section-card {
+    border-radius: 14px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 32px rgba(35,111,161,.11);
+    background: rgba(255,255,255,0.86);
+    padding: 37px 40px 35px 40px;
+    transition: box-shadow 0.22s, transform 0.22s;
+}
+.section-card:hover {
+    box-shadow: 0 6px 32px rgba(21,75,214,.16);
+    transform: translateY(-4px) scale(1.01);
+}
 
-    /* Section header */
-    .portfolio-header {
-        margin-top: 25px;
-        margin-bottom: 10px;
-        color: #113452;
-    }
+/* Card images */
+.card-image {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(34,60,80,.07);
+}
 
-    hr {
-        border: none;
-        height: 1.5px;
-        background: linear-gradient(60deg,#296ed3,rgba(255,255,255,0));
-        margin: 30px 0 17px 0;
-    }
+/* Project tags */
+.project-tag {
+    display: inline-block;
+    background: #e0eaef;
+    color: #134e6f;
+    border-radius: 6px;
+    font-size: 0.9em;
+    padding: 3px 11px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+}
 
-    /* Sidebar background */
-    .sidebar .sidebar-content {
-        background: #2940d3;
-        color: white;
-    }
+/* Timeline */
+.timeline {
+    border-left: 3.5px solid #235ed5;
+    margin: 18px 0 18px 16px;
+    padding-left: 24px;
+}
+.timeline-event {
+    margin-bottom: 19px;
+    color: #152447;
+}
 
-    </style>
+/* Section header */
+.portfolio-header {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #113452;
+}
+
+/* Sidebar */
+.sidebar .sidebar-content {
+    background: #2940d3;
+    color: white;
+}
+
+/* Links style */
+a {
+    color: #134e6f;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+</style>
 """, unsafe_allow_html=True)
 
-# -------- Utility fn to load Lottie animations --------
+# -------- Utility function to load Lottie animations --------
 def load_lottieurl(url: str):
     r = requests.get(url)
     if r.status_code != 200:
@@ -153,7 +173,7 @@ if main_section == "Skills":
         with st.expander("Tools"):
             st.markdown("Git, VS Code, Jupyter")
         with st.expander("Core Concepts"):
-            st.markdown("Data Structures, OOP, DBMS, Software Engineering")
+            st.markdown("Data Structures, OOP, DBMS, Machine Learning, Deep Learning")
         with st.expander("Soft Skills"):
             st.markdown("Problem Solving, Critical Thinking, Fast Learner, Collaborative")
         st.markdown('</div>', unsafe_allow_html=True)
@@ -165,14 +185,14 @@ if main_section == "Projects":
     project_data = [
         {
             "title": "Movie Recommendation System",
-            "image": "project_movie.jpg",      # replace with your local image
+            "image": "project_movie.jpg",      # please have this image in your folder or replace with your own
             "tags": ["Python", "Pandas", "Scikit-Learn"],
             "desc": "Built a content-based and collaborative filtering model using cosine similarity to suggest movies.",
             "github": "https://github.com/harshavardhan2415/movie-recommender"
         },
         {
             "title": "Book Recommendation System",
-            "image": "project_book.jpg",      # replace with your local image
+            "image": "project_book.jpg",      # please have this image in your folder or replace
             "tags": ["Python", "Keras", "TensorFlow"],
             "desc": "Artificial Neural Network for personalized book suggestions.",
             "github": "https://github.com/harshavardhan2415/book-recommender"
